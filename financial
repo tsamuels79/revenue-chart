@@ -88,3 +88,4 @@ const RevenueProjections = () => {
 };
 
 export default RevenueProjections;
+npm start
