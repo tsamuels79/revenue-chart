@@ -1,1 +1,2 @@
-
+npx create-react-app .
+npm install recharts @radix-ui/react-slot class-variance-authority clsx tailwind-merge tailwindcss @/components/ui/card
