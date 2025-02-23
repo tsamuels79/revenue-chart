@@ -1,2 +1,90 @@
 npx create-react-app .
 npm install recharts @radix-ui/react-slot class-variance-authority clsx tailwind-merge tailwindcss @/components/ui/card
+import React from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+const RevenueProjections = () => {
+  const data = [
+    { month: 'Jan 25', als: 0, concierge: 0, total: 0 },
+    { month: 'Feb 25', als: 3496.48, concierge: 20250, total: 23746.48 },
+    { month: 'Jun 25', als: 17482.40, concierge: 101250, total: 118732.40 },
+    { month: 'Dec 25', als: 38461.28, concierge: 222750, total: 261211.28 },
+    { month: 'Jun 26', als: 59440.16, concierge: 344250, total: 403690.16 },
+    { month: 'Dec 26', als: 80419.04, concierge: 465750, total: 546169.04 },
+    { month: 'Jun 27', als: 101397.92, concierge: 587250, total: 688647.92 },
+    { month: 'Dec 27', als: 122376.80, concierge: 708750, total: 831126.80 }
+  ];
+
+  return (
+    <Card className="w-full h-full bg-white">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xl font-bold text-slate-800">Projected Revenue Growth</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="month" 
+                tick={{ fill: '#475569' }}
+              />
+              <YAxis 
+                tick={{ fill: '#475569' }}
+                tickFormatter={(value) => `$${(value/1000).toFixed(0)}K`}
+              />
+              <Tooltip 
+                formatter={(value) => [`$${value.toLocaleString()}`, ``]}
+                labelStyle={{ color: '#475569' }}
+              />
+              <Legend />
+              <Line 
+                type="monotone" 
+                dataKey="concierge" 
+                name="Concierge Services"
+                stroke="#0d9488" 
+                strokeWidth={2}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="als" 
+                name="Assisted Living Services"
+                stroke="#0369a1" 
+                strokeWidth={2}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="total" 
+                name="Total Revenue"
+                stroke="#4c1d95" 
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+          <div className="p-3 bg-slate-50 rounded">
+            <h3 className="font-semibold mb-2">Assisted Living Services</h3>
+            <ul className="space-y-1">
+              <li>Initial: $0</li>
+              <li>Year 1 End: $38,461</li>
+              <li>Year 3 End: $122,377</li>
+            </ul>
+          </div>
+          <div className="p-3 bg-slate-50 rounded">
+            <h3 className="font-semibold mb-2">Concierge Services</h3>
+            <ul className="space-y-1">
+              <li>Initial: $0</li>
+              <li>Year 1 End: $222,750</li>
+              <li>Year 3 End: $708,750</li>
+            </ul>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default RevenueProjections;
